@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block main %}
+<header class="bg-primary text-white">
+  <div class="container text-center">
+    <h1>Home Page</h1>
+  </div>
+</header>
+<h2>
+Make a new post
+</h2>
+{# A form to create a new post at the top of the home page #}
+<form action="{{ url_for('make_post') }}" name="new_post_form" method="post">
+    <textarea id="new_post" class="text" cols="20" rows ="5" name="post_msg_form"></textarea><br>
+   <input type="submit" value="Post" class="submitButton">
+</form>
+
+{# The code is quite selfexplanatory, go through every post, print it out, every comment, print it out, every reply, print it out, and then put forms to reply, comment at the end of each div class #}
+{# This code ideally shouldve be written once and using funcions, but time constraints #}
+<div class="container", align="left">
+	<h2>Posts</h2>
+	<div class="panel-group">
+		{% for post in posts_by_friends %}
+			<div class="panel panel-success">
+		    	<div class="panel-heading">
+					<a href="{{ url_for('profile', student_id=post[2]) }}"> {{ zid_to_name(post[2]) }} </a>
+		    	</div>
+		      	<div class="panel-body">
+					<h4>
+					{{ message_conversion(post[1])|newline_to_break|safe }} <br>
+					time : {{ post[3] }}
+					</h4>
+					{% for comment in get_comments(post[0], post[6]) %}
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<a href="{{ url_for('profile', student_id=comment[2]) }}"> {{ zid_to_name(comment[2]) }} </a>
+							</div>
+						    <div class="panel-body">
+								<h5>
+								{{ message_conversion(comment[1])|safe }} <br>
+								time : {{ comment[3] }}
+								</h5>
+								{% for reply in get_replies(post[0], comment[4], comment[5]) %}
+								<div class="panel panel-danger">
+									<div class="panel-heading">
+										<a href="{{ url_for('profile', student_id=reply[2]) }}"> {{ zid_to_name(reply[2]) }} </a>
+									</div>
+									<div class="panel-body">
+										<h6>
+										{{ message_conversion(reply[1])|safe }} <br>
+										time : {{ reply[3] }}
+										</h6>
+									</div>	
+								</div>
+								{% endfor %}
+								<form action="{{ url_for('make_reply') }}" name="new_reply_form" method="POST">
+							 	   	<textarea id="new_reply" class="text" cols="10" rows ="1" name="reply_msg_form"></textarea><br>
+							 		<input id = "reply_button" type="submit" value="Reply" class="submitButton">
+							 		<input type="hidden" name="student_post" value="{{ post[2] }}">
+							 		<input type="hidden" name="post_number" value="{{ post[6] }}">
+							 		<input type="hidden" name="comment_number" value="{{ comment[5] }}">
+								</form>
+							</div>
+						</div>
+					{% endfor %}
+					<form action="{{ url_for('make_comment') }}" name="new_comment_form" method="POST">
+				 	   	<textarea id="new_comment" class="text" cols="20" rows ="2" name="comment_msg_form"></textarea><br>
+				 		<input id = "comment_button" type="submit" value="Comment" class="submitButton">
+				 		<input type="hidden" name="student_post" value="{{ post[2] }}">
+				 		<input type="hidden" name="post_number" value="{{ post[6] }}">
+					</form>
+			  	</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}

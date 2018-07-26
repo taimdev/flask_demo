@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block main %}
+{% if profile_details[11] != None %}
+	<img src="{{ url_for('static', filename=profile_details[11]) }}" alt="pic1"> 
+{% else %}
+	<img src="{{ url_for('static', filename='doggo.jpg') }}" alt="pic1"> 
+{% endif %}
+<br>
+<h1>{{ profile_details[1] }}</h1>
+<h2>{{ profile_details[0] }}</h2>
+Degree: {{ profile_details[7] }} <br>
+Birthday: {{ profile_details[8] }} <br>
+Location: {{ profile_details[3] }} <br>
+
+{% if control == 1 %}
+{# Only show those buttons if it is not the logged in user #}
+{% else %}
+	{% if curr_user in friend_list %}
+		<form method="POST" action="{{ url_for('unfriend') }}">
+		  <input type="hidden" name="profile_zid" value="{{ profile_details[0] }}">
+		  <button type="submit" class="btn btn-default">Unfriend</button>
+		</form>	
+	{% else %}
+		<form method="POST" action="{{ url_for('friend') }}">
+		  <input type="hidden" name="profile_zid" value="{{ profile_details[0] }}">
+		  <button type="submit" class="btn btn-default">Friend</button>
+		</form>	
+	{% endif %}
+{% endif %}
+
+<br><br>
+<h2>Friends<br></h2>
+{% for friend in friend_list %}
+	{{ dp_url(friend)|safe }}
+	<a href="{{ url_for('profile', student_id=friend) }}"> {{ zid_to_name(friend) }} </a></h5><br>
+{% endfor %}
+
+<br><br>
+<h2>Profile Wall<br></h2>
+{% if control == 1 %}
+{# Only show this form if it is the logged in user #}
+	<h4>Make a new post</h4>
+	<form action="{{ url_for('make_post') }}" name="new_post_form" method="post">
+	    <textarea id="new_post" class="text" cols="20" rows ="5" name="post_msg_form"></textarea><br>
+
+	   <input type="submit" value="Post" class="submitButton">
+	</form>
+{% endif %}
+
+{# The code is quite selfexplanatory, go through every post, print it out, every comment, print it out, every reply, print it out, and then put forms to reply, comment at the end of each div class  however since it is using different functions, it needs if statements to confirm, again coould be better but time constraints#}
+{# This code ideally shouldve be written once and using funcions, but time constraints #}
+<div class="container", align="left">
+	<h2>Posts</h2>
+	<div class="panel-group">
+		{% for post in post_details %}
+			<div class="panel panel-success">
+		    	<div class="panel-heading">
+					<a href="{{ url_for('profile', student_id=post[2]) }}"> {{ zid_to_name(post[2]) }} </a>
+		    	</div>
+		      	<div class="panel-body">
+					<h4>
+					{{ message_conversion(post[1])|newline_to_break|safe }} <br>
+					time : {{ post[3] }}
+					</h4>
+					{% for comment in comment_details %}
+						{% if comment[4] == post[6] %}
+							<div class="panel panel-warning">
+								<div class="panel-heading">
+									<a href="{{ url_for('profile', student_id=comment[2]) }}"> {{ zid_to_name(comment[2]) }} </a>
+								</div>
+							    <div class="panel-body">
+									<h5>
+										{{ message_conversion(comment[1])|newline_to_break|safe }} <br>
+										time : {{ comment[3] }}
+									</h5>
+									{% for reply in reply_details %}
+										{% if comment[5] == reply[5]  and comment[4] ==  reply[4] %}
+											<div class="panel panel-danger">
+												<div class="panel-heading">
+													<a href="{{ url_for('profile', student_id=reply[2]) }}"> {{ zid_to_name(reply[2]) }} </a>
+												</div>
+												<div class="panel-body">
+													<h6>
+														{{ message_conversion(reply[1])|newline_to_break|safe }} <br>
+														time : {{ reply[3] }}
+													</h6>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+									<form action="{{ url_for('make_reply') }}" name="new_reply_form" method="POST">
+								 	   	<textarea id="new_reply" class="text" cols="10" rows ="1" name="reply_msg_form"></textarea><br>
+								 		<input id = "reply_button" type="submit" value="Reply" class="submitButton">
+								 		<input type="hidden" name="student_post" value="{{ post[2] }}">
+								 		<input type="hidden" name="post_number" value="{{ post[6] }}">
+								 		<input type="hidden" name="comment_number" value="{{ comment[5] }}">
+									</form>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+					<form action="{{ url_for('make_comment') }}" name="new_comment_form" method="POST">
+					   	<textarea id="new_comment" class="text" cols="20" rows ="2" name="comment_msg_form"></textarea><br>
+						<input id = "comment_button" type="submit" value="Comment" class="submitButton">
+						<input type="hidden" name="student_post" value="{{ post[2] }}">
+						<input type="hidden" name="post_number" value="{{ post[6] }}">
+					</form>
+				</div>
+			</div>
+		{% endfor %}
+	</div>	
+</div>
+{% endblock %}
+
+

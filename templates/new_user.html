@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block main %}
+{# A slightly large form to collect information to create the new user #}
+<body>
+	<h1> Create New User </h1>
+    <form action="{{ url_for('create_user')}}" method="post">
+        <div>
+          <label for="name">zID:</label> <input type="text" id="name" name="zID">
+        </div>
+        <div>
+          <label for="mail">Name:</label> <input type="text" id="mail" name="Name">
+        </div>
+        <div>
+          <label for="msg">Email:</label> <input id="email" name="Email">
+        </div>
+        <div>
+          <label for="msg">Suburb:</label> <input id="msg" name="Suburb">
+        </div>
+        <div>
+          <label for="msg">Longitude:</label> <input id="msg" name="Longitude">
+        </div>
+        <div>
+          <label for="msg">Latitude:</label> <input id="msg" name="Latitude">
+        </div>
+        <div>
+          <label for="msg">Program:</label> <input id="msg" name="Program">
+        </div>
+        <div>
+          <label for="msg">Courses:</label> <input id="msg" name="Courses">
+           (comma/space separated) ", "
+        </div>
+        <div>
+          <label for="msg">Birthday:</label> <input id="msg" name="Birthday">
+        </div>
+        <div>
+          <label for="msg">Password:</label> <input id="msg" name="Password">
+        </div>
+        <div class="button">
+          <button type="submit">Create User</button>
+        </div>
+    </form>
+</body>
+
+{% endblock %}

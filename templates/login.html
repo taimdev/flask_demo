@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block main %}
+{# Simple post to get information, and a new account button at the bottom #}
+<p>
+<form method="POST" action="login">
+<p>
+zid: <input name="zid" >
+<p>
+password: <input type="password" name="password" > 
+<p>
+<input type="submit" value="Login" >
+</form>
+
+<br>
+<form method="POST" action="{{ url_for('new_user')}}">
+    <input type="submit" value="Create New Account" />
+</form>
+
+{% endblock %}

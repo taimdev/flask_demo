@@ -1,0 +1,229 @@
+2016-10-05 14:37:05
+2016-10-05 14:37:05
+Status: 500 INTERNAL SERVER ERROR
+Content-Type: text/html; charset=utf-8
+X-XSS-Protection: 0
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>KeyError: 'SERVER_NAME' // Werkzeug Debugger</title>
+    <link rel="stylesheet" href="?__debugger__=yes&amp;cmd=resource&amp;f=style.css"
+        type="text/css">
+    <!-- We need to make sure this has a favicon so that the debugger does
+         not by accident trigger a request to /favicon.ico which might
+         change the application state. -->
+    <link rel="shortcut icon"
+        href="?__debugger__=yes&amp;cmd=resource&amp;f=console.png">
+    <script src="?__debugger__=yes&amp;cmd=resource&amp;f=jquery.js"></script>
+    <script src="?__debugger__=yes&amp;cmd=resource&amp;f=debugger.js"></script>
+    <script type="text/javascript">
+      var TRACEBACK = 140613985956472,
+          CONSOLE_MODE = false,
+          EVALEX = false,
+          EVALEX_TRUSTED = false,
+          SECRET = "b9VzQ6FE4nJm15G60f7r";
+    </script>
+  </head>
+  <body style="background-color: #fff">
+    <div class="debugger">
+<h1>builtins.KeyError</h1>
+<div class="detail">
+  <p class="errormsg">KeyError: 'SERVER_NAME'</p>
+</div>
+<h2 class="traceback">Traceback <em>(most recent call last)</em></h2>
+<div class="traceback">
+  
+  <ul><li><div class="frame" id="frame-140613985956640">
+  <h4>File <cite class="filename">"/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py"</cite>,
+      line <em class="line">1997</em>,
+      in <code class="function">__call__</code></h4>
+  <div class="source"><pre class="line before"><span class="ws">                </span>error = None</pre>
+<pre class="line before"><span class="ws">            </span>ctx.auto_pop(error)</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def __call__(self, environ, start_response):</pre>
+<pre class="line before"><span class="ws">        </span>&quot;&quot;&quot;Shortcut for :attr:`wsgi_app`.&quot;&quot;&quot;</pre>
+<pre class="line current"><span class="ws">        </span>return self.wsgi_app(environ, start_response)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def __repr__(self):</pre>
+<pre class="line after"><span class="ws">        </span>return '&lt;%s %r&gt;' % (</pre>
+<pre class="line after"><span class="ws">            </span>self.__class__.__name__,</pre>
+<pre class="line after"><span class="ws">            </span>self.name,</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140613985956920">
+  <h4>File <cite class="filename">"/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py"</cite>,
+      line <em class="line">1977</em>,
+      in <code class="function">wsgi_app</code></h4>
+  <div class="source"><pre class="line before"><span class="ws">        </span>:param environ: a WSGI environment</pre>
+<pre class="line before"><span class="ws">        </span>:param start_response: a callable accepting a status code,</pre>
+<pre class="line before"><span class="ws">                               </span>a list of headers and an optional</pre>
+<pre class="line before"><span class="ws">                               </span>exception context to start the response</pre>
+<pre class="line before"><span class="ws">        </span>&quot;&quot;&quot;</pre>
+<pre class="line current"><span class="ws">        </span>ctx = self.request_context(environ)</pre>
+<pre class="line after"><span class="ws">        </span>ctx.push()</pre>
+<pre class="line after"><span class="ws">        </span>error = None</pre>
+<pre class="line after"><span class="ws">        </span>try:</pre>
+<pre class="line after"><span class="ws">            </span>try:</pre>
+<pre class="line after"><span class="ws">                </span>response = self.full_dispatch_request()</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140613985956976">
+  <h4>File <cite class="filename">"/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py"</cite>,
+      line <em class="line">1938</em>,
+      in <code class="function">request_context</code></h4>
+  <div class="source"><pre class="line before"><span class="ws">           </span>Added support for non-with statement usage and ``with`` statement</pre>
+<pre class="line before"><span class="ws">           </span>is now passed the ctx object.</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">        </span>:param environ: a WSGI environment</pre>
+<pre class="line before"><span class="ws">        </span>&quot;&quot;&quot;</pre>
+<pre class="line current"><span class="ws">        </span>return RequestContext(self, environ)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def test_request_context(self, *args, **kwargs):</pre>
+<pre class="line after"><span class="ws">        </span>&quot;&quot;&quot;Creates a WSGI environment from the given values (see</pre>
+<pre class="line after"><span class="ws">        </span>:class:`werkzeug.test.EnvironBuilder` for more information, this</pre>
+<pre class="line after"><span class="ws">        </span>function accepts the same arguments).</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140613985957032">
+  <h4>File <cite class="filename">"/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/ctx.py"</cite>,
+      line <em class="line">242</em>,
+      in <code class="function">__init__</code></h4>
+  <div class="source"><pre class="line before"><span class="ws">    </span>def __init__(self, app, environ, request=None):</pre>
+<pre class="line before"><span class="ws">        </span>self.app = app</pre>
+<pre class="line before"><span class="ws">        </span>if request is None:</pre>
+<pre class="line before"><span class="ws">            </span>request = app.request_class(environ)</pre>
+<pre class="line before"><span class="ws">        </span>self.request = request</pre>
+<pre class="line current"><span class="ws">        </span>self.url_adapter = app.create_url_adapter(self.request)</pre>
+<pre class="line after"><span class="ws">        </span>self.flashes = None</pre>
+<pre class="line after"><span class="ws">        </span>self.session = None</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">        </span># Request contexts can be pushed multiple times and interleaved with</pre>
+<pre class="line after"><span class="ws">        </span># other request contexts.  Now only if the last level is popped we</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140613985957088">
+  <h4>File <cite class="filename">"/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py"</cite>,
+      line <em class="line">1765</em>,
+      in <code class="function">create_url_adapter</code></h4>
+  <div class="source"><pre class="line before"><span class="ws">           </span>This can now also be called without a request object when the</pre>
+<pre class="line before"><span class="ws">           </span>URL adapter is created for the application context.</pre>
+<pre class="line before"><span class="ws">        </span>&quot;&quot;&quot;</pre>
+<pre class="line before"><span class="ws">        </span>if request is not None:</pre>
+<pre class="line before"><span class="ws">            </span>return self.url_map.bind_to_environ(request.environ,</pre>
+<pre class="line current"><span class="ws">                </span>server_name=self.config['SERVER_NAME'])</pre>
+<pre class="line after"><span class="ws">        </span># We need at the very least the server name to be set for this</pre>
+<pre class="line after"><span class="ws">        </span># to work.</pre>
+<pre class="line after"><span class="ws">        </span>if self.config['SERVER_NAME'] is not None:</pre>
+<pre class="line after"><span class="ws">            </span>return self.url_map.bind(</pre>
+<pre class="line after"><span class="ws">                </span>self.config['SERVER_NAME'],</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140613985957144">
+  <h4>File <cite class="filename">"/home/taimurazhar97/.local/lib/python3.5/site-packages/werkzeug/routing.py"</cite>,
+      line <em class="line">1299</em>,
+      in <code class="function">bind_to_environ</code></h4>
+  <div class="source"><pre class="line before"><span class="ws">                </span>wsgi_server_name = wsgi_server_name[:-3]</pre>
+<pre class="line before"><span class="ws">            </span>elif environ['wsgi.url_scheme'] == 'https' \</pre>
+<pre class="line before"><span class="ws">                    </span>and wsgi_server_name.endswith(':443'):</pre>
+<pre class="line before"><span class="ws">                </span>wsgi_server_name = wsgi_server_name[:-4]</pre>
+<pre class="line before"><span class="ws">        </span>else:</pre>
+<pre class="line current"><span class="ws">            </span>wsgi_server_name = environ['SERVER_NAME']</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">            </span>if (environ['wsgi.url_scheme'], environ['SERVER_PORT']) not \</pre>
+<pre class="line after"><span class="ws">               </span>in (('https', '443'), ('http', '80')):</pre>
+<pre class="line after"><span class="ws">                </span>wsgi_server_name += ':' + environ['SERVER_PORT']</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+</ul>
+  <blockquote>KeyError: 'SERVER_NAME'</blockquote>
+</div>
+
+<div class="plain">
+  <form action="/?__debugger__=yes&amp;cmd=paste" method="post">
+    <p>
+      <input type="hidden" name="language" value="pytb">
+      This is the Copy/Paste friendly version of the traceback.  <span
+      class="pastemessage">You can also paste this traceback into
+      a <a href="https://gist.github.com/">gist</a>:
+      <input type="submit" value="create paste"></span>
+    </p>
+    <textarea cols="50" rows="10" name="code" readonly>Traceback (most recent call last):
+  File &quot;/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py&quot;, line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File &quot;/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py&quot;, line 1977, in wsgi_app
+    ctx = self.request_context(environ)
+  File &quot;/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py&quot;, line 1938, in request_context
+    return RequestContext(self, environ)
+  File &quot;/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/ctx.py&quot;, line 242, in __init__
+    self.url_adapter = app.create_url_adapter(self.request)
+  File &quot;/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py&quot;, line 1765, in create_url_adapter
+    server_name=self.config['SERVER_NAME'])
+  File &quot;/home/taimurazhar97/.local/lib/python3.5/site-packages/werkzeug/routing.py&quot;, line 1299, in bind_to_environ
+    wsgi_server_name = environ['SERVER_NAME']
+KeyError: 'SERVER_NAME'</textarea>
+  </form>
+</div>
+<div class="explanation">
+  The debugger caught an exception in your WSGI application.  You can now
+  look at the traceback which led to the error.  <span class="nojavascript">
+  If you enable JavaScript you can also use additional features such as code
+  execution (if the evalex feature is enabled), automatic pasting of the
+  exceptions and much more.</span>
+</div>
+      <div class="footer">
+        Brought to you by <strong class="arthur">DON'T PANIC</strong>, your
+        friendly Werkzeug powered traceback interpreter.
+      </div>
+    </div>
+
+    <div class="pin-prompt">
+      <div class="inner">
+        <h3>Console Locked</h3>
+        <p>
+          The console is locked and needs to be unlocked by entering the PIN.
+          You can find the PIN printed out on the standard output of your
+          shell that runs the server.
+        <form>
+          <p>PIN:
+            <input type=text name=pin size=14>
+            <input type=submit name=btn value="Confirm Pin">
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!--
+
+Traceback (most recent call last):
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py", line 1977, in wsgi_app
+    ctx = self.request_context(environ)
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py", line 1938, in request_context
+    return RequestContext(self, environ)
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/ctx.py", line 242, in __init__
+    self.url_adapter = app.create_url_adapter(self.request)
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py", line 1765, in create_url_adapter
+    server_name=self.config['SERVER_NAME'])
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/werkzeug/routing.py", line 1299, in bind_to_environ
+    wsgi_server_name = environ['SERVER_NAME']
+KeyError: 'SERVER_NAME'
+
+-->
+Traceback (most recent call last):
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py", line 1977, in wsgi_app
+    ctx = self.request_context(environ)
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py", line 1938, in request_context
+    return RequestContext(self, environ)
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/ctx.py", line 242, in __init__
+    self.url_adapter = app.create_url_adapter(self.request)
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/flask/app.py", line 1765, in create_url_adapter
+    server_name=self.config['SERVER_NAME'])
+  File "/home/taimurazhar97/.local/lib/python3.5/site-packages/werkzeug/routing.py", line 1299, in bind_to_environ
+    wsgi_server_name = environ['SERVER_NAME']
+KeyError: 'SERVER_NAME'

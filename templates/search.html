@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block main %}
+
+<header class="bg-primary text-white">
+  <div class="container text-center">
+    <h1>Search Page</h1>
+  </div>
+</header>
+<h3>
+Your query is {{ search_query }}<br>
+</h3>
+
+<h2>Users</h2><br>
+These are the users that match your query <br>
+{% for result in search_users(search_query) %}
+	{{ result|safe }}
+	<br>
+{% endfor %}
+
+{# The code is quite selfexplanatory, go through every post, print it out, every comment, print it out, every reply, print it out, and then put forms to reply, comment at the end of each div class  however since it is using different functions #}
+{# This code ideally shouldve be written once and using funcions, but time constraints #}
+<br><br>
+<div class="container", align="left">
+	<h2>Posts</h2>
+	<div class="panel-group">
+		These are the posts that match your query <br>
+		{% for result in search_posts(search_query) %}
+			{% if result == 'Sorry your query did not result in any hits' %}
+				{{ result }}
+			{% else %}
+				<div class="panel panel-success">
+			    	<div class="panel-heading">
+						<a href="{{ url_for('profile', student_id=result[2]) }}"> {{ zid_to_name(result[2]) }} </a>
+			    	</div>
+			      	<div class="panel-body">
+						<h4>
+						{{ message_conversion(result[1])|newline_to_break|safe }} <br>
+						time : {{ result[3] }}
+						</h4>
+						{% for comment in get_comments(result[0], result[6]) %}
+							<div class="panel panel-warning">
+								<div class="panel-heading">
+									<a href="{{ url_for('profile', student_id=comment[2]) }}"> {{ zid_to_name(comment[2]) }} </a>
+								</div>
+							    <div class="panel-body">
+									<h5>
+									{{ message_conversion(comment[1])|safe }} <br>
+									time : {{ comment[3] }}
+									</h5>
+									{% for reply in get_replies(result[0], comment[4], comment[5]) %}
+									<div class="panel panel-danger">
+										<div class="panel-heading">
+											<a href="{{ url_for('profile', student_id=reply[2]) }}"> {{ zid_to_name(reply[2]) }} </a>
+										</div>
+										<div class="panel-body">
+											<h6>
+											{{ message_conversion(reply[1])|safe }} <br>
+											time : {{ reply[3] }}
+											</h6>
+										</div>	
+									</div>
+									{% endfor %}
+									<form action="{{ url_for('make_reply') }}" name="new_reply_form" method="POST">
+								 	   	<textarea id="new_reply" class="text" cols="10" rows ="1" name="reply_msg_form"></textarea><br>
+								 		<input id = "reply_button" type="submit" value="Reply" class="submitButton">
+								 		<input type="hidden" name="student_post" value="{{ result[2] }}">
+								 		<input type="hidden" name="post_number" value="{{ result[6] }}">
+								 		<input type="hidden" name="comment_number" value="{{ comment[5] }}">
+									</form>
+								</div>
+							</div>
+						{% endfor %}
+						<form action="{{ url_for('make_comment') }}" name="new_comment_form" method="POST">
+					 	   	<textarea id="new_comment" class="text" cols="20" rows ="2" name="comment_msg_form"></textarea><br>
+					 		<input id = "comment_button" type="submit" value="Comment" class="submitButton">
+					 		<input type="hidden" name="student_post" value="{{ result[2] }}">
+					 		<input type="hidden" name="post_number" value="{{ result[6] }}">
+						</form>
+				  	</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+</div>
+
+
+
+{% endblock %}
